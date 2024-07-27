@@ -1,81 +1,23 @@
-# CODTECH-Task-2
-#Vulnerability Scanning Tool Code
-import nmap
-import requests
-from bs4 import BeautifulSoup
+Name : Sanga Vyshnavi
+Company : CODTECH IT SOLUTIONS
+ID : CT08DS4706
+Domain: CyberSecurity & Ethical Hacking
+Duration : July to August 2024
+Mentor : Neela Santhosh Kumar
+OVERVIEW OF THE PROJECT : 
+PROJECT: Simple Vulnerability Scanning Tool
+overview :-
+This project aims to create a simple vulnerability scanning tool that scans a network or website for common security vulnerabilities such as open ports, outdated software versions, and misconfigurations.
 
-def scan_ports(target_ip):
-    """
-    Scan for open ports on the target IP address.
+Tools and Techniques :-
+Nmap: A network scanning tool for discovering hosts, services, and operating systems.
+Python: A programming language for creating the vulnerability scanning tool.
+Requests: A Python library for making HTTP requests to check for outdated software versions.
+BeautifulSoup: A Python library for parsing HTML and XML documents to check for misconfigurations.
 
-    Parameters:
-    target_ip (str): The IP address to scan.
-
-    Returns:
-    list: A list of open ports.
-    """
-    nm = nmap.PortScanner()
-    nm.scan(target_ip, '1-1024')
-    open_ports = [port for port in nm[target_ip]['tcp'] if nm[target_ip]['tcp'][port]['state'] == 'open']
-    return open_ports
-
-def check_software_versions(target_url):
-    """
-    Check for outdated software versions on the target URL.
-
-    Parameters:
-    target_url (str): The URL to check.
-
-    Returns:
-    dict: A dictionary of software versions.
-    """
-    response = requests.get(target_url)
-    soup = BeautifulSoup(response.text, 'html.parser')
-    software_versions = {}
-    for tag in soup.find_all('meta'):
-        if 'generator' in tag.attrs:
-            software_versions['CMS'] = tag.attrs['generator']
-        elif 'powered-by' in tag.attrs:
-            software_versions['Web Server'] = tag.attrs['powered-by']
-    return software_versions
-
-def check_misconfigurations(target_url):
-    """
-    Check for misconfigurations on the target URL.
-
-    Parameters:
-    target_url (str): The URL to check.
-
-    Returns:
-    list: A list of misconfigurations.
-    """
-    response = requests.get(target_url)
-    soup = BeautifulSoup(response.text, 'html.parser')
-    misconfigurations = []
-    if soup.find('title') == 'Index of /':
-        misconfigurations.append('Directory listing enabled')
-    if soup.find('meta', attrs={'name': 'robots'}) == 'index, follow':
-        misconfigurations.append('Search engine indexing enabled')
-    return misconfigurations
-
-def main():
-    target_ip = input("Enter the target IP address: ")
-    target_url = input("Enter the target URL: ")
-
-    open_ports = scan_ports(target_ip)
-    print("Open Ports:")
-    for port in open_ports:
-        print(port)
-
-    software_versions = check_software_versions(target_url)
-    print("\nSoftware Versions:")
-    for software, version in software_versions.items():
-        print(f"{software}: {version}")
-
-    misconfigurations = check_misconfigurations(target_url)
-    print("\nMisconfigurations:")
-    for misconfiguration in misconfigurations:
-        print(misconfiguration)
-
-if __name__ == "__main__":
-    main()
+Advice :-
+Use a more comprehensive vulnerability scanning tool like Nmap or OpenVAS.
+Regularly update and patch software to prevent known vulnerabilities.
+Implement a Web Application Firewall (WAF) to detect and prevent common web attacks.
+Use a secure protocol like HTTPS to encrypt data in transit.
+Limit access to sensitive data and systems to authorized personnel only.
